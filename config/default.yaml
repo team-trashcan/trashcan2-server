@@ -1,4 +1,3 @@
 app:
   logLevel: info
-  port:
-  baseUrl:
+  port: 4000
