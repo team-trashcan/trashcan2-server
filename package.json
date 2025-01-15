@@ -2,9 +2,10 @@
   "name": "trashcan2-server",
   "version": "0.0.1",
   "description": "The \"backend\" for the trashcans",
-  "main": "server.ts",
+  "main": "src/server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -18,10 +19,14 @@
   "homepage": "https://github.com/team-trashcan/trashcan2-server#readme",
   "dependencies": {
     "body-parser": "^1.20.3",
+    "config": "^3.3.12",
     "express": "^4.0.0",
-    "express-promise-router": "^4.1.1"
+    "express-promise-router": "^4.1.1",
+    "js-yaml": "^4.1.0"
   },
   "devDependencies": {
-    "@types/express": "^4.0.0"
+    "@types/config": "^3.3.5",
+    "@types/express": "^4.0.0",
+    "nodemon": "^3.1.9"
   }
 }

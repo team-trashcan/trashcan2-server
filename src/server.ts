@@ -1,18 +1,13 @@
-import express from "express";
-import bodyParser from "body-parser";
-import errorMiddleware from "./errorMiddleware";
-import notFoundMiddleware from "./notFoundMiddleware";
+import config from "./config";
+import app from "./app";
 
-import sensorApi from "./Api/SensorApi";
+const server = async (): Promise<void> => {
+  app.listen(config.port, () => {
+    console.log(`Server is listening on port ${config.port}`);
+  });
+};
 
-const app = express();
-
-app.disable("x-powered-by");
-app.use(bodyParser.json({ limit: "10mb" }));
-
-app.use("/update-sensor", sensorApi);
-
-app.use(errorMiddleware);
-app.use(notFoundMiddleware);
-
-export default app;
+server().catch((error: Error) => {
+  setTimeout(server, 5000);
+  console.log(error);
+});

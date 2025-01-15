@@ -1,0 +1,4 @@
+app:
+  logLevel: info
+  port:
+  baseUrl:
