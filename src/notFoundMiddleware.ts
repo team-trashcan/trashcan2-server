@@ -4,7 +4,6 @@ export default function notFoundMiddleware(req: Request, res: Response): void {
   res.status(404).json({
     status: 404,
     message: "Not Found",
-    baseUrl: req.baseUrl,
     path: req.path,
   });
 }
