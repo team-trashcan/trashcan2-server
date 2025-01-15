@@ -11,8 +11,8 @@ const app = express();
 app.disable("x-powered-by");
 app.use(bodyParser.json({ limit: "10mb" }));
 
-app.use("/", statusApi);
-app.use("/update-sensor", sensorApi);
+app.use("/v1/", statusApi);
+app.use("/v1/update-sensor", sensorApi);
 
 app.use(errorMiddleware);
 app.use(notFoundMiddleware);
