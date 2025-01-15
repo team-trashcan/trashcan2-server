@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import errorMiddleware from "./errorMiddleware";
 import notFoundMiddleware from "./notFoundMiddleware";
 
+import statusApi from "./Api/StatusApi";
 import sensorApi from "./Api/SensorApi";
 
 const app = express();
@@ -10,6 +11,7 @@ const app = express();
 app.disable("x-powered-by");
 app.use(bodyParser.json({ limit: "10mb" }));
 
+app.use("/", statusApi);
 app.use("/update-sensor", sensorApi);
 
 app.use(errorMiddleware);
