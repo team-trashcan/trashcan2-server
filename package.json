@@ -1,0 +1,27 @@
+{
+  "name": "trashcan2-server",
+  "version": "0.0.1",
+  "description": "The \"backend\" for the trashcans",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/team-trashcan/trashcan2-server.git"
+  },
+  "author": "Team Trashcan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/team-trashcan/trashcan2-server/issues"
+  },
+  "homepage": "https://github.com/team-trashcan/trashcan2-server#readme",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.0.0",
+    "express-promise-router": "^4.1.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.0.0"
+  }
+}
