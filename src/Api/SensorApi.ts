@@ -3,12 +3,12 @@ import Router from "express-promise-router";
 import saveToJson from "../Shared/saveToJson";
 import readFromJson from "../Shared/readFromJson";
 import isEmpty from "../Shared/isEmpty";
+import fs from "fs";
 
 const router = Router();
 
 router.post("/", (req: Request, res: Response) => {
-  console.log("[DEBUG] POST on /update-sensor");
-  console.log("[DEBUG] req.body received from trashcan: ", req.body);
+  console.log("[DEBUG] POST on /");
 
   if (isEmpty(req.body.name) || isEmpty(req.body.data)) {
     return res.status(400).json({
@@ -18,18 +18,22 @@ router.post("/", (req: Request, res: Response) => {
   }
 
   saveToJson(`trashcan-${req.body.name}`, req.body.data);
-
-  // debug
-  const test = readFromJson(`trashcan-${req.body.name}`);
-  console.log("[DEBUG] Stuff saved in file:", test);
-
   res.status(200).end();
 });
 
+router.get("/", (req: Request, res: Response) => {
+  console.log("[DEBUG] GET on /");
+  const jsonFiles: object[] = [];
+  for (const file in fs.readdirSync("../../database")) {
+    const jsonData = readFromJson(file);
+    jsonFiles.push(jsonData);
+  }
+  res.status(200).json(jsonFiles);
+});
+
 router.get("/:trashcanName", (req: Request, res: Response) => {
-  console.log("[DEBUG] GET on /update-sensor");
+  console.log("[DEBUG] GET on /:trashcanName");
   const jsonData = readFromJson(`trashcan-${req.params.trashcanName}.json`);
-  console.log("[DEBUG] returning jsonData:", jsonData);
   res.status(200).json(jsonData);
 });
 
