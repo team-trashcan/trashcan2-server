@@ -4,6 +4,7 @@ import saveToJson from "../Shared/saveToJson";
 import readFromJson from "../Shared/readFromJson";
 import isEmpty from "../Shared/isEmpty";
 import fs from "fs";
+import path from "path";
 
 const router = Router();
 
@@ -24,14 +25,10 @@ router.post("/", (req: Request, res: Response) => {
 router.get("/", (req: Request, res: Response) => {
   console.log("[DEBUG] GET on /");
   const jsonFiles: object[] = [];
-  if (fs.existsSync("../../database")) {
-    console.log("it exists");
-    for (const file in fs.readdirSync(`../../database`)) {
-      const jsonData = readFromJson(file);
-      jsonFiles.push(jsonData);
-    }
-  } else {
-    console.log("it dont exist");
+  console.log("it exists");
+  for (const file in fs.readdirSync(`${path.resolve("../../database")}`)) {
+    const jsonData = readFromJson(file);
+    jsonFiles.push(jsonData);
   }
   res.status(200).json(jsonFiles);
 });
