@@ -7,6 +7,6 @@ export default function readFromJson(fileName: string) {
     return JSON.parse(rawData);
   } catch (error) {
     console.error("[DEBUG] Error reading data:", error);
-    return null;
+    return {};
   }
 }
