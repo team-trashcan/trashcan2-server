@@ -28,7 +28,7 @@ router.post("/", (req: Request, res: Response) => {
 
 router.get("/:trashcanName", (req: Request, res: Response) => {
   console.log("[DEBUG] GET on /update-sensor");
-  const jsonData = readFromJson(`trashcan-${req.params.trashcanName}`);
+  const jsonData = readFromJson(`trashcan-${req.params.trashcanName}.json`);
   console.log("[DEBUG] returning jsonData:", jsonData);
   res.status(200).json(jsonData);
 });
