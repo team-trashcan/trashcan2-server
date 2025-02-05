@@ -25,7 +25,7 @@ router.post("/", (req: Request, res: Response) => {
 router.get("/", (req: Request, res: Response) => {
   console.log("[DEBUG] GET on /");
   const jsonFiles: object[] = [];
-  console.log("it exists");
+  console.log(`path: ${path.resolve("../../database")}`);
   for (const file in fs.readdirSync(`${path.resolve("../../database")}`)) {
     const jsonData = readFromJson(file);
     jsonFiles.push(jsonData);
