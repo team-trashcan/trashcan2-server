@@ -29,8 +29,19 @@ router.get("/", (req: Request, res: Response) => {
     `${path.resolve(__dirname, "../../database")}`
   )) {
     const jsonData = readFromJson(file);
+
+    console.log("file:", file);
+    const test1 = file.split("/");
+    console.log("test1:", test1);
+
+    const test2 = test1[-1];
+    console.log("test2:", test2);
+
+    const test3 = test2.replace(".json", "");
+    console.log("test3:", test3);
+
     jsonFiles.push({
-      name: file.split("/")[-1].replace(".json", ""),
+      name: test3,
       data: jsonData,
     });
   }
