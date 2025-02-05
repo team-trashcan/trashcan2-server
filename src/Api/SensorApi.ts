@@ -26,7 +26,7 @@ router.get("/", (req: Request, res: Response) => {
   console.log("[DEBUG] GET on /");
   const jsonFiles: object[] = [];
   console.log(`path: ${path.resolve(__dirname, "../../database")}`);
-  for (const file in fs.readdirSync(
+  for (const file of fs.readdirSync(
     `${path.resolve(__dirname, "../../database")}`
   )) {
     console.log("Reading file", file);
