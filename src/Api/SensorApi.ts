@@ -24,9 +24,14 @@ router.post("/", (req: Request, res: Response) => {
 router.get("/", (req: Request, res: Response) => {
   console.log("[DEBUG] GET on /");
   const jsonFiles: object[] = [];
-  for (const file in fs.readdirSync("../../database")) {
-    const jsonData = readFromJson(file);
-    jsonFiles.push(jsonData);
+  if (fs.existsSync("../../database")) {
+    console.log("it exists");
+    for (const file in fs.readdirSync(`../../database`)) {
+      const jsonData = readFromJson(file);
+      jsonFiles.push(jsonData);
+    }
+  } else {
+    console.log("it dont exist");
   }
   res.status(200).json(jsonFiles);
 });
