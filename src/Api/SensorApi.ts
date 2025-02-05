@@ -31,13 +31,8 @@ router.get("/", (req: Request, res: Response) => {
     const jsonData = readFromJson(file);
 
     console.log("file:", file);
-    const test1 = file.split("/");
-    console.log("test1:", test1);
 
-    const test2 = test1[-1];
-    console.log("test2:", test2);
-
-    const test3 = test2.replace(".json", "");
+    const test3 = file.replace(".json", "");
     console.log("test3:", test3);
 
     jsonFiles.push({
