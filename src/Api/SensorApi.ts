@@ -19,27 +19,31 @@ router.post("/", (req: Request, res: Response) => {
   }
 
   saveToJson(`trashcan-${req.body.name}`, req.body.data);
-  res.status(200).end();
+  return res.status(200).end();
 });
 
 router.get("/", (req: Request, res: Response) => {
   console.log("[DEBUG] GET on /");
   const jsonFiles: object[] = [];
-  console.log(`path: ${path.resolve(__dirname, "../../database")}`);
   for (const file of fs.readdirSync(
     `${path.resolve(__dirname, "../../database")}`
   )) {
-    console.log("Reading file", file);
     const jsonData = readFromJson(file);
     jsonFiles.push(jsonData);
   }
-  res.status(200).json(jsonFiles);
+  return res.status(200).json(jsonFiles);
 });
 
 router.get("/:trashcanName", (req: Request, res: Response) => {
   console.log("[DEBUG] GET on /:trashcanName");
   const jsonData = readFromJson(`trashcan-${req.params.trashcanName}.json`);
-  res.status(200).json(jsonData);
+  if (Object.keys(jsonData).length === 0) {
+    return res.status(404).json({
+      status: 400,
+      message: `No data for trashcan-${req.params.trashcanName}.json`,
+    });
+  }
+  return res.status(200).json(jsonData);
 });
 
 export default router;
