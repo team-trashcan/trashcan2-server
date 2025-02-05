@@ -6,11 +6,19 @@ import readFromJson from "../Shared/readFromJson";
 const router = Router();
 
 router.post("/", (req: Request, res: Response) => {
+  console.log("[DEBUG] POST on /update-sensor");
   console.log("[DEBUG] req.body received from trashcan: ", req.body);
   saveToJson(`trashcan-${req.body.name}`, req.body.data);
   const test = readFromJson(`trashcan-${req.body.name}`);
   console.log("[DEBUG] Stuff saved in file:", test);
   res.status(200).end();
+});
+
+router.post("/", (req: Request, res: Response) => {
+  console.log("[DEBUG] GET on /update-sensor");
+  const jsonData = readFromJson(`trashcan-${req.body.name}`);
+  console.log("[DEBUG] returning jsonData:", jsonData);
+  res.status(200).json(jsonData);
 });
 
 export default router;
