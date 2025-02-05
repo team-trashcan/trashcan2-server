@@ -29,6 +29,7 @@ router.get("/", (req: Request, res: Response) => {
   for (const file in fs.readdirSync(
     `${path.resolve(__dirname, "../../database")}`
   )) {
+    console.log("Reading file", file);
     const jsonData = readFromJson(file);
     jsonFiles.push(jsonData);
   }
