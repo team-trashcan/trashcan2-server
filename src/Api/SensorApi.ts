@@ -9,8 +9,6 @@ import path from "path";
 const router = Router();
 
 router.post("/", (req: Request, res: Response) => {
-  console.log("[DEBUG] POST on /");
-
   if (isEmpty(req.body.name) || isEmpty(req.body.data)) {
     return res.status(400).json({
       status: 400,
@@ -23,7 +21,6 @@ router.post("/", (req: Request, res: Response) => {
 });
 
 router.get("/", (req: Request, res: Response) => {
-  console.log("[DEBUG] GET on /");
   const jsonFiles: object[] = [];
   for (const file of fs.readdirSync(
     `${path.resolve(__dirname, "../../database")}`
