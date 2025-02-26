@@ -11,8 +11,4 @@ router.get("/readyz", (req: Request, res: Response) => {
   res.status(200).json({ success: true });
 });
 
-router.post("/echo", (req: Request, res: Response) => {
-  res.status(200).json({ received: req.body });
-});
-
 export default router;
