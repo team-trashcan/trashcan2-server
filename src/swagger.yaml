@@ -1,0 +1,135 @@
+openapi: 3.0.0
+info:
+  title: Trashcan API
+  version: 1.0.0
+  description: API documentation for our intelligent trashcans
+servers:
+  - url: api.wurstkatze.eu
+    description: Production
+paths:
+  /livez:
+    get:
+      summary: Get liveness status of the server
+      responses:
+        '200':
+          description: OK
+
+  /readyz:
+    get:
+      summary: Get readyness status of the server
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Internal Server Error
+
+  /trashcan-fill-height:
+    post:
+      summary: Save trashcan data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - data
+              properties:
+                name:
+                  type: string
+                data:
+                  type: number
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+    get:
+      summary: Get all trashcan data
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - name
+                    - data
+                  properties:
+                    name:
+                      type: string
+                    data:
+                      type: number
+
+  /trashcan-fill-height/{trashcanName}:
+    get:
+      summary: Get data for a specific trashcan
+      parameters:
+        - name: trashcanName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - name
+                  - data
+                properties:
+                  name:
+                    type: string
+                  data:
+                    type: number
+        '404':
+          description: Not Found
+
+  /trashcan-fill-height/percentage:
+    get:
+      summary: Get all trashcans with their fill percentage
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    percentage:
+                      type: number
+
+  /trashcan-fill-height/percentage/{trashcanName}:
+    get:
+      summary: Get fill percentage for a specific trashcan
+      parameters:
+        - name: trashcanName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  percentage:
+                    type: number
+        '404':
+          description: Not Found
