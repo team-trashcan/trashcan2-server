@@ -1,6 +1,6 @@
 import fs from "fs";
 import config from "../config";
-import { sensorData } from "src/interface";
+import { sensorData } from "../interface";
 
 export default function readFromJson(fileName: string): sensorData | undefined {
   try {

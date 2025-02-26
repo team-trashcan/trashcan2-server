@@ -5,8 +5,9 @@ import readFromJson from "../Shared/readFromJson";
 import isEmpty from "../Shared/isEmpty";
 import fs from "fs";
 import path from "path";
-import { sensorData, sensorDataPercentage } from "src/interface";
-import mapTrashcanPercentage from "src/Shared/mapTrashcanPercentage";
+import { sensorData, sensorDataPercentage } from "../interface";
+import mapTrashcanPercentage from "../Shared/mapTrashcanPercentage";
+
 
 const router = Router();
 
