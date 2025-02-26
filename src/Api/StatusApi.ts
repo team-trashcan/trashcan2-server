@@ -8,7 +8,13 @@ router.get("/livez", (req: Request, res: Response) => {
 });
 
 router.get("/readyz", (req: Request, res: Response) => {
-  res.status(200).json({ success: true });
+  // Checks if server is ready can go here
+  const someCheck = true
+  if (someCheck) {
+    res.status(200).json({ success: true });
+  } else {
+    res.status(500).json({ success: false })
+  }
 });
 
 export default router;
