@@ -1,14 +1,37 @@
 openapi: 3.0.0
+
 info:
   title: Trashcan API
   version: 1.0.0
   description: API documentation for our intelligent trashcans
+
 servers:
-  - url: api.wurstkatze.eu
+  - url: http://api.wurstkatze.eu/{version}
     description: Production
+    variables:
+      version:
+        default: v1
+        enum:
+          - v1
+  - url: http://localhost:4000/{version}
+    description: Local
+    variables:
+      version:
+        default: v1
+        enum:
+          - v1
+
+tags:
+  - name: Trashcans
+    description: Operations related to trashcan data.
+  - name: Server
+    description: Server probes to get server status
+
 paths:
   /livez:
     get:
+      tags:
+        - Server
       summary: Get liveness status of the server
       responses:
         '200':
@@ -16,6 +39,8 @@ paths:
 
   /readyz:
     get:
+      tags:
+        - Server
       summary: Get readyness status of the server
       responses:
         '200':
@@ -25,6 +50,8 @@ paths:
 
   /trashcan-fill-height:
     post:
+      tags:
+        - Trashcans
       summary: Save trashcan data
       requestBody:
         required: true
@@ -46,6 +73,8 @@ paths:
         '400':
           description: Bad Request
     get:
+      tags:
+        - Trashcans
       summary: Get all trashcan data
       responses:
         '200':
@@ -67,6 +96,8 @@ paths:
 
   /trashcan-fill-height/{trashcanName}:
     get:
+      tags:
+        - Trashcans
       summary: Get data for a specific trashcan
       parameters:
         - name: trashcanName
@@ -94,6 +125,8 @@ paths:
 
   /trashcan-fill-height/percentage:
     get:
+      tags:
+        - Trashcans
       summary: Get all trashcans with their fill percentage
       responses:
         '200':
@@ -112,6 +145,8 @@ paths:
 
   /trashcan-fill-height/percentage/{trashcanName}:
     get:
+      tags:
+        - Trashcans
       summary: Get fill percentage for a specific trashcan
       parameters:
         - name: trashcanName
