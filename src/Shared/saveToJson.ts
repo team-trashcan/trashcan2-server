@@ -1,5 +1,6 @@
 import fs from 'fs'
 import config from '../config'
+import logger from '../logger'
 
 export default function saveToJson(fileName: string, data: object): void {
   try {
@@ -10,6 +11,6 @@ export default function saveToJson(fileName: string, data: object): void {
       'utf8'
     )
   } catch (error) {
-    console.error('Error saving data to json file:', error)
+    logger.error('Error saving data to json file:', error)
   }
 }

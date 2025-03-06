@@ -1,6 +1,7 @@
 import fs from 'fs'
 import config from '../config'
 import { sensorData } from '../interface'
+import logger from '../logger'
 
 export default function readFromJson(fileName: string): sensorData | undefined {
   try {
@@ -8,9 +9,9 @@ export default function readFromJson(fileName: string): sensorData | undefined {
     return JSON.parse(rawData) as sensorData
   } catch (error) {
     if (typeof error === 'object' && error !== null && 'code' in error && error.code === 'ENOENT') {
-      console.log('[DEBUG]: No file found with name:', fileName)
+      logger.debug('No file found with name:', fileName)
     } else {
-      console.error('Error reading data:', error)
+      logger.error('Error reading data:', error)
     }
   }
 }

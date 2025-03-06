@@ -1,7 +1,17 @@
 import config from 'config'
 
+export enum LogLevel {
+  debug = 0,
+  info = 1,
+  warn = 2,
+  error = 3,
+}
+
 export interface AppConfig {
-  logLevel: string
+  logger?: {
+    logLevel?: LogLevel
+    timestampEnabled?: boolean
+  }
   port: number
   filePath: string
 }

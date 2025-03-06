@@ -1,4 +1,6 @@
 app:
-  logLevel: info
+  logger:
+    logLevel: info
+    timestampEnabled: false
   port: 4000
   filePath: ./database

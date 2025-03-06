@@ -1,33 +1,36 @@
 import config from './config'
 import app from './app'
+import logger from './logger'
 
 let serverInstance: ReturnType<typeof app.listen> | null = null
 
 const startServer = () => {
+  logger.debug('Starting server...')
+
   if (serverInstance) {
     serverInstance.close(() => {
-      console.log('Closed previous server')
+      logger.info('Closed previous server')
     })
   }
 
   serverInstance = app.listen(config.port, () => {
-    console.log(`Server is listening on port ${config.port}\nAPI Documentation at /v1/docs`)
+    logger.info('Server is listening on port', config.port)
   })
 
   serverInstance.on('error', (error: Error) => {
-    console.error('Server error:', error)
+    logger.error('Server error:', error)
     setTimeout(startServer, 5000)
   })
 
   const gracefulShutdown = (signal: string) => {
-    console.log(`\nReceived ${signal}. Closing server...`)
+    logger.debug(`Received ${signal}. Closing server...`)
     if (serverInstance) {
       serverInstance.close(() => {
-        console.log('Server was closed')
+        logger.info('Server was closed')
         process.exit(0)
       })
     } else {
-      console.log('Server already closed')
+      logger.info('Server already closed')
       process.exit(0)
     }
   }
