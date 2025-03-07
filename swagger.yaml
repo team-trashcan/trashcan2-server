@@ -41,7 +41,7 @@ paths:
     get:
       tags:
         - Server
-      summary: Get readyness status of the server
+      summary: Get readiness status of the server
       responses:
         '200':
           description: OK
@@ -166,5 +166,32 @@ paths:
                     type: string
                   percentage:
                     type: number
+        '404':
+          description: Not Found
+  /trashcan-fill-height/percentage/{trashcanName}/statistics:
+    get:
+      tags:
+        - Trashcans
+      summary: Get statistics for fill percentage of a specific trashcan over time
+      parameters:
+        - name: trashcanName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                    percentage:
+                      type: number
         '404':
           description: Not Found

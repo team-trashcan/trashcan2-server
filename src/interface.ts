@@ -7,3 +7,8 @@ export interface sensorDataPercentage {
   name: string
   percentage: number
 }
+
+export interface sensorStatisticPercentage {
+  date: string
+  percentage: number
+}
