@@ -24,6 +24,7 @@ router.post('/', (req: Request, res: Response) => {
     })
   }
 
+  logger.debug(`Saving new trashcan data for ${req.body.name}: ${req.body.data}`)
   saveToJson(`rawData/trashcan-${req.body.name}`, req.body)
 
   if (appConfig.updateStatisticsOnNewData) {
