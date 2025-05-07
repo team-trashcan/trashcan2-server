@@ -88,11 +88,15 @@ paths:
                   required:
                     - name
                     - data
+                    - estimatedTimeOfFull
                   properties:
                     name:
                       type: string
                     data:
                       type: number
+                    estimatedTimeOfFull:
+                      type: string
+                      format: date-time
 
   /trashcan-fill-height/{trashcanName}:
     get:
@@ -115,11 +119,15 @@ paths:
                 required:
                   - name
                   - data
+                  - estimatedTimeOfFull
                 properties:
                   name:
                     type: string
                   data:
                     type: number
+                  estimatedTimeOfFull:
+                      type: string
+                      format: date-time
         '404':
           description: Not Found
 
@@ -161,11 +169,18 @@ paths:
             application/json:
               schema:
                 type: object
+                required:
+                  - name
+                  - percentageFill
+                  - estimatedTimeOfFull
                 properties:
                   name:
                     type: string
                   percentageFill:
                     type: number
+                  estimatedTimeOfFull:
+                    type: string
+                    format: date-time
         '404':
           description: Not Found
   /percentage/{trashcanName}/statistics:

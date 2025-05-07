@@ -10,7 +10,9 @@ const startServer = () => {
   logger.debug('Starting server...')
 
   if (serverInstance) {
-    serverInstance.close(() => {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    serverInstance.close(async () => {
+      await new Promise((f) => setTimeout(f, 2000))
       logger.info('Closed previous server')
     })
   }

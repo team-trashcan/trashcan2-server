@@ -4,7 +4,7 @@ import saveToJson from '../Shared/saveToJson'
 import readFromJson from '../Shared/readFromJson'
 import fs from 'fs'
 import path from 'path'
-import { sensorData, SensorData } from '../interface'
+import { incomingSensorData, IncomingSensorData, sensorData, SensorData } from '../interface'
 import hasPropertiesOfType from '../Shared/hasPropertiesOfType'
 import logger from '../logger'
 import updateTrashcanStatistics from '../Shared/updateTrashcanStatistics'
@@ -13,9 +13,9 @@ import appConfig from '../config'
 const router = Router()
 
 router.post('/', (req: Request, res: Response) => {
-  if (!hasPropertiesOfType<SensorData>(req.body, sensorData)) {
+  if (!hasPropertiesOfType<IncomingSensorData>(req.body, incomingSensorData)) {
     return res.status(400).json({
-      message: 'Missing required property of type SensorData',
+      message: 'Missing required property of type IncomingSensorData',
     })
   }
   if (isNaN(Number(req.body.data))) {
@@ -25,7 +25,7 @@ router.post('/', (req: Request, res: Response) => {
   }
 
   logger.debug(`Saving new trashcan data for ${req.body.name}: ${req.body.data}`)
-  saveToJson(`rawData/trashcan-${req.body.name}`, req.body)
+  saveToJson(`rawData/trashcan-${req.body.name}`, { ...req.body, estimatedTimeOfFull: new Date(0).toISOString() })
 
   if (appConfig.updateStatisticsOnNewData) {
     void updateTrashcanStatistics(req.body.name)

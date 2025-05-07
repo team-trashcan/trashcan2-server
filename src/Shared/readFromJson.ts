@@ -2,7 +2,7 @@ import fs from 'fs'
 import config from '../config'
 import logger from '../logger'
 
-export default function readFromJson(fileName: string): unknown {
+export default function readFromJson(fileName: string) {
   try {
     const rawData = fs.readFileSync(`${config.filePath}/${fileName}`, 'utf8')
     return JSON.parse(rawData) as unknown

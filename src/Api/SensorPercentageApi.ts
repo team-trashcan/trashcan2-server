@@ -26,6 +26,7 @@ router.get('/', (req: Request, res: Response) => {
       jsonFiles.push({
         name: jsonData.name,
         percentageFill: mapTrashcanPercentage(jsonData.data),
+        estimatedTimeOfFull: jsonData.estimatedTimeOfFull,
       })
     } else {
       logger.warn(`Invalid json in file ${file}`)
@@ -45,6 +46,7 @@ router.get('/:trashcanName', (req: Request, res: Response) => {
     return res.status(200).json({
       name: jsonData.name,
       percentageFill: mapTrashcanPercentage(jsonData.data),
+      estimatedTimeOfFull: jsonData.estimatedTimeOfFull,
     })
   } else {
     logger.warn(`Invalid json in file trashcan-${req.params.trashcanName}.json`)
@@ -52,6 +54,7 @@ router.get('/:trashcanName', (req: Request, res: Response) => {
   }
 })
 
+// TODO This can't be found, 404 - Idk why, the above works
 router.get('/percentage/:trashcanName/statistics', (req: Request, res: Response) => {
   const jsonDataArray = readFromJson(`statistics/trashcan-${req.params.trashcanName}.json`)
   if (jsonDataArray === undefined) {

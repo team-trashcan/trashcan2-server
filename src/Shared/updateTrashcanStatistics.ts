@@ -6,6 +6,7 @@ import mapTrashcanPercentage from './mapTrashcanPercentage'
 import hasPropertiesOfType from './hasPropertiesOfType'
 import { sensorData, SensorData } from '../interface'
 import addSensorStatistic from './addSensorStatistic'
+import estimateTimeOfFull from './estimateTimeOfFull'
 
 export default async function updateTrashcanStatistics(trashcanName?: string) {
   logger.debug(`Updating trashcan statistics${trashcanName !== undefined ? ` for ${trashcanName}` : ''}...`)
@@ -19,6 +20,12 @@ export default async function updateTrashcanStatistics(trashcanName?: string) {
         date: updateTime,
         percentageFill: mapTrashcanPercentage(content.data),
       })
+      estimateTimeOfFull(content.name)
+    } else {
+      logger.error(
+        'Failed to update trashcan statistic: Invalid file structure in file',
+        `rawData/trashcan-${trashcanName}.json`
+      )
     }
   } else {
     const trashcanFiles = (await readDirectory(path.resolve(__dirname, '../../database/rawData'))).filter((file) =>
@@ -31,6 +38,12 @@ export default async function updateTrashcanStatistics(trashcanName?: string) {
           date: updateTime,
           percentageFill: mapTrashcanPercentage(content.data),
         })
+        estimateTimeOfFull(content.name)
+      } else {
+        logger.error(
+          'Failed to update trashcan statistic: Invalid file structure in file',
+          `rawData/${trashcanFile.split('/').at(-1)}`
+        )
       }
     }
   }
