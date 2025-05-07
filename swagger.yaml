@@ -41,7 +41,7 @@ paths:
     get:
       tags:
         - Server
-      summary: Get readyness status of the server
+      summary: Get readiness status of the server
       responses:
         '200':
           description: OK
@@ -88,11 +88,15 @@ paths:
                   required:
                     - name
                     - data
+                    - estimatedTimeOfFull
                   properties:
                     name:
                       type: string
                     data:
                       type: number
+                    estimatedTimeOfFull:
+                      type: string
+                      format: date-time
 
   /trashcan-fill-height/{trashcanName}:
     get:
@@ -115,15 +119,19 @@ paths:
                 required:
                   - name
                   - data
+                  - estimatedTimeOfFull
                 properties:
                   name:
                     type: string
                   data:
                     type: number
+                  estimatedTimeOfFull:
+                      type: string
+                      format: date-time
         '404':
           description: Not Found
 
-  /trashcan-fill-height/percentage:
+  /percentage:
     get:
       tags:
         - Trashcans
@@ -140,10 +148,10 @@ paths:
                   properties:
                     name:
                       type: string
-                    percentage:
+                    percentageFill:
                       type: number
 
-  /trashcan-fill-height/percentage/{trashcanName}:
+  /percentage/{trashcanName}:
     get:
       tags:
         - Trashcans
@@ -161,10 +169,49 @@ paths:
             application/json:
               schema:
                 type: object
+                required:
+                  - name
+                  - percentageFill
+                  - estimatedTimeOfFull
                 properties:
                   name:
                     type: string
-                  percentage:
+                  percentageFill:
                     type: number
+                  estimatedTimeOfFull:
+                    type: string
+                    format: date-time
+        '404':
+          description: Not Found
+  /percentage/{trashcanName}/statistics:
+    get:
+      tags:
+        - Trashcans
+      summary: Get statistics for fill percentage of a specific trashcan over time
+      parameters:
+        - name: trashcanName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                        percentageFill:
+                          type: number
         '404':
           description: Not Found

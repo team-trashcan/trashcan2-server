@@ -1,0 +1,6 @@
+{
+  "ignore": ["node_modules", "database"],
+  "watch": ["src"],
+  "exec": "npm start",
+  "ext": "ts"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "test1",
+  "data": [
+    { "date": "2025-05-07T16:57:36.473Z", "percentageFill": 0 },
+    { "date": "2025-05-08T16:57:54.720Z", "percentageFill": 5 },
+    { "date": "2025-05-09T16:57:57.913Z", "percentageFill": 10 },
+    { "date": "2025-05-10T16:58:04.075Z", "percentageFill": 15 },
+    { "date": "2025-05-11T16:58:08.850Z", "percentageFill": 20 },
+    { "date": "2025-05-12T16:58:12.126Z", "percentageFill": 25 },
+    { "date": "2025-05-07T16:58:54.538Z", "percentageFill": 25 }
+  ]
+}

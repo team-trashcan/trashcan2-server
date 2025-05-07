@@ -1,0 +1,69 @@
+import { type Request, type Response } from 'express'
+import Router from 'express-promise-router'
+import saveToJson from '../Shared/saveToJson'
+import readFromJson from '../Shared/readFromJson'
+import fs from 'fs'
+import path from 'path'
+import { incomingSensorData, IncomingSensorData, sensorData, SensorData } from '../interface'
+import hasPropertiesOfType from '../Shared/hasPropertiesOfType'
+import logger from '../logger'
+import updateTrashcanStatistics from '../Shared/updateTrashcanStatistics'
+import appConfig from '../config'
+
+const router = Router()
+
+router.post('/', (req: Request, res: Response) => {
+  if (!hasPropertiesOfType<IncomingSensorData>(req.body, incomingSensorData)) {
+    return res.status(400).json({
+      message: 'Missing required property of type IncomingSensorData',
+    })
+  }
+  if (isNaN(Number(req.body.data))) {
+    return res.status(400).json({
+      message: "Property 'data' needs to be a valid number",
+    })
+  }
+
+  logger.debug(`Saving new trashcan data for ${req.body.name}: ${req.body.data}`)
+  saveToJson(`rawData/trashcan-${req.body.name}`, { ...req.body, estimatedTimeOfFull: new Date(0).toISOString() })
+
+  if (appConfig.updateStatisticsOnNewData) {
+    void updateTrashcanStatistics(req.body.name)
+  }
+
+  return res.status(200).end()
+})
+
+router.get('/', (req: Request, res: Response) => {
+  const jsonFiles: SensorData[] = []
+  for (const file of fs
+    .readdirSync(`${path.resolve(__dirname, '../../database/rawData')}`)
+    .filter((f) => f !== '.gitkeep')) {
+    const jsonData = readFromJson(`rawData/${file}`)
+    if (hasPropertiesOfType<SensorData>(jsonData, sensorData)) {
+      if (jsonData !== undefined) {
+        jsonFiles.push(jsonData)
+      }
+    } else {
+      logger.warn(`Invalid json in file ${file}`)
+    }
+  }
+  return res.status(200).json(jsonFiles)
+})
+
+router.get('/:trashcanName', (req: Request, res: Response) => {
+  const jsonData = readFromJson(`rawData/trashcan-${req.params.trashcanName}.json`)
+  if (jsonData === undefined) {
+    return res.status(404).json({
+      message: `No data for trashcan-${req.params.trashcanName}.json`,
+    })
+  }
+  if (hasPropertiesOfType<SensorData>(jsonData, sensorData)) {
+    return res.status(200).json(jsonData)
+  } else {
+    logger.warn(`Invalid json in file trashcan-${req.params.trashcanName}.json`)
+    return res.status(500).end()
+  }
+})
+
+export default router

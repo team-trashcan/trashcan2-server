@@ -1,6 +1,7 @@
 app:
   logger:
     logLevel: info
-    timestampEnabled: false
+    timestampEnabled: true
   port: 4000
   filePath: ./database
+  updateStatisticsOnNewData: true

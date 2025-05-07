@@ -14,7 +14,24 @@ export interface AppConfig {
   }
   port: number
   filePath: string
+  updateStatisticsOnNewData?: boolean
 }
 
 const appConfig = config.get<AppConfig>('app')
+
+//! I think the config package does this already, no need to manually implement
+// if (process.env.ALLOW_CONFIG_MUTATIONS?.toLowerCase() === 'true') {
+//   const environmentLogLevel = process.env.LOG_LEVEL?.toLowerCase()
+//   if (environmentLogLevel !== undefined && environmentLogLevel in LogLevel) {
+//     appConfig.logger ??= {}
+//     appConfig.logger.logLevel = environmentLogLevel as unknown as LogLevel
+//   }
+
+//   const environmentTimestampEnabled = process.env.TIMESTAMP_ENABLED?.toLowerCase()
+//   if (environmentTimestampEnabled === 'true' || environmentTimestampEnabled === 'false') {
+//     appConfig.logger ??= {}
+//     appConfig.logger.timestampEnabled = Boolean(environmentTimestampEnabled)
+//   }
+// }
+
 export default appConfig

@@ -9,25 +9,12 @@ class Logger {
     this.timestampEnabled = timestampEnabled
   }
 
-  private pad(number: number) {
-    return number.toString().padStart(2, '0')
-  }
-
-  private timestamp(): string {
-    if (!this.timestampEnabled) return ''
-    const now = new Date()
-    return `[${this.pad(now.getDate())}-${this.pad(now.getMonth() + 1)}-${now.getFullYear()}_${this.pad(now.getHours())}:${this.pad(now.getMinutes())}:${this.pad(now.getSeconds())}] `
-  }
-
-  private parseArgument(argument: unknown): string {
-    if (typeof argument === 'string') return argument
-    return JSON.stringify(argument)
-  }
-
   private log(prefix: string, argumentArray: unknown[]) {
     if (LogLevel[this.logLevel as unknown as keyof typeof LogLevel] > LogLevel[prefix as keyof typeof LogLevel]) return
     console.log(
-      `${this.timestamp()}[${prefix.toUpperCase()}] ${argumentArray.map((arg) => this.parseArgument(arg)).join(' ')}`
+      `${this.timestampEnabled ? `[${new Date().toISOString()}] ` : ''}[${prefix.toUpperCase()}] ${argumentArray
+        .map((arg) => (typeof arg !== 'string' ? String(arg) : arg))
+        .join(' ')}`
     )
   }
 
