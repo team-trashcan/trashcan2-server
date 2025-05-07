@@ -17,7 +17,7 @@ export default async function updateTrashcanStatistics(trashcanName?: string) {
     if (hasPropertiesOfType<SensorData>(content, sensorData)) {
       await addSensorStatistic(content.name, {
         date: updateTime,
-        percentage: mapTrashcanPercentage(content.data),
+        percentageFill: mapTrashcanPercentage(content.data),
       })
     }
   } else {
@@ -29,7 +29,7 @@ export default async function updateTrashcanStatistics(trashcanName?: string) {
       if (hasPropertiesOfType<SensorData>(content, sensorData)) {
         await addSensorStatistic(content.name, {
           date: updateTime,
-          percentage: mapTrashcanPercentage(content.data),
+          percentageFill: mapTrashcanPercentage(content.data),
         })
       }
     }

@@ -9,20 +9,20 @@ export const sensorData = [
 
 export interface SensorDataPercentage {
   name: string
-  percentage: number
+  percentageFill: number
 }
 export const sensorDataPercentage = [
   { key: 'name', type: 'string' },
-  { key: 'percentage', type: 'number' },
+  { key: 'percentageFill', type: 'number' },
 ]
 
 export interface SensorStatisticPercentage {
   date: string
-  percentage: number
+  percentageFill: number
 }
 export const sensorStatisticPercentage = [
   { key: 'date', type: 'string' },
-  { key: 'percentage', type: 'number' },
+  { key: 'percentageFill', type: 'number' },
 ]
 
 export interface SensorStatisticFileStructure {

@@ -25,7 +25,7 @@ router.get('/', (req: Request, res: Response) => {
     if (hasPropertiesOfType<SensorData>(jsonData, sensorData)) {
       jsonFiles.push({
         name: jsonData.name,
-        percentage: mapTrashcanPercentage(jsonData.data),
+        percentageFill: mapTrashcanPercentage(jsonData.data),
       })
     } else {
       logger.warn(`Invalid json in file ${file}`)
@@ -44,7 +44,7 @@ router.get('/:trashcanName', (req: Request, res: Response) => {
   if (hasPropertiesOfType<SensorData>(jsonData, sensorData)) {
     return res.status(200).json({
       name: jsonData.name,
-      percentage: mapTrashcanPercentage(jsonData.data),
+      percentageFill: mapTrashcanPercentage(jsonData.data),
     })
   } else {
     logger.warn(`Invalid json in file trashcan-${req.params.trashcanName}.json`)

@@ -21,7 +21,7 @@ export default async function addSensorStatistic(
       // File does not exist, create, initialize and write data
       await writeFile(
         filePath,
-        `{"name": "${trashcanName}", "data":[{"date": "${data.date}", "percentage": ${data.percentage}}]}`
+        `{"name": "${trashcanName}", "data":[{"date": "${data.date}", "percentageFill": ${data.percentageFill}}]}`
       )
       return true
     }
