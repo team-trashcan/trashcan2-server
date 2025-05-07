@@ -7,6 +7,8 @@ import path from 'path'
 import { sensorData, SensorData } from '../interface'
 import hasPropertiesOfType from '../Shared/hasPropertiesOfType'
 import logger from '../logger'
+import updateTrashcanStatistics from '../Shared/updateTrashcanStatistics'
+import appConfig from '../config'
 
 const router = Router()
 
@@ -23,6 +25,11 @@ router.post('/', (req: Request, res: Response) => {
   }
 
   saveToJson(`rawData/trashcan-${req.body.name}`, req.body)
+
+  if (appConfig.updateStatisticsOnNewData) {
+    void updateTrashcanStatistics(req.body.name)
+  }
+
   return res.status(200).end()
 })
 

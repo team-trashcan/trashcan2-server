@@ -24,3 +24,12 @@ export const sensorStatisticPercentage = [
   { key: 'date', type: 'string' },
   { key: 'percentage', type: 'number' },
 ]
+
+export interface SensorStatisticFileStructure {
+  name: string
+  data: SensorStatisticPercentage[]
+}
+export const SensorStatisticFileStructure = [
+  { key: 'name', type: 'string' },
+  { key: 'data', type: 'array', items: sensorStatisticPercentage },
+]

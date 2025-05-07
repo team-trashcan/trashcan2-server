@@ -21,7 +21,7 @@ class Logger {
 
   private parseArgument(argument: unknown): string {
     if (typeof argument === 'string') return argument
-    return JSON.stringify(argument)
+    return String(argument)
   }
 
   private log(prefix: string, argumentArray: unknown[]) {

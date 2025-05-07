@@ -4,6 +4,7 @@
   "description": "The \"backend\" for the trashcans",
   "main": "src/server.ts",
   "scripts": {
+    "start": "ts-node src/server.ts",
     "dev": "nodemon",
     "build": "tsc",
     "lint": "eslint --max-warnings=0",

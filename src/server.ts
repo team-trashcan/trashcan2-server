@@ -23,27 +23,26 @@ const startServer = () => {
     logger.error('Server error:', error)
     setTimeout(startServer, 5000)
   })
-
-  const cronjob = new CronJob('0 0 */6 * * *', updateTrashcanStatistics, null, true)
-
-  const gracefulShutdown = (signal: string) => {
-    logger.debug(`Received ${signal}. Closing server...`)
-    if (cronjob.isActive) {
-      cronjob.stop()
-      logger.debug('CronJob stopped')
-    }
-    if (serverInstance) {
-      serverInstance.close(() => {
-        logger.info('Server was closed')
-        process.exit(0)
-      })
-    } else {
-      logger.info('Server already closed')
-      process.exit(0)
-    }
-  }
-  process.on('SIGINT', () => gracefulShutdown('SIGINT'))
-  process.on('SIGTERM', () => gracefulShutdown('SIGTERM'))
 }
+
+const cronjob = new CronJob('0 0 */6 * * *', updateTrashcanStatistics, null, true)
+const gracefulShutdown = (signal: string) => {
+  logger.debug(`Received ${signal}. Closing server...`)
+  if (cronjob.isActive) {
+    cronjob.stop()
+    logger.debug('CronJob stopped')
+  }
+  if (serverInstance) {
+    serverInstance.close(() => {
+      logger.info('Server was closed')
+      process.exit(0)
+    })
+  } else {
+    logger.info('Server already closed')
+    process.exit(0)
+  }
+}
+process.on('SIGINT', () => gracefulShutdown('SIGINT'))
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'))
 
 startServer()
