@@ -4,16 +4,16 @@ import saveToJson from '../Shared/saveToJson'
 import readFromJson from '../Shared/readFromJson'
 import fs from 'fs'
 import path from 'path'
-import { sensorData } from '../interface'
+import { sensorData, SensorData } from '../interface'
 import hasPropertiesOfType from '../Shared/hasPropertiesOfType'
 import logger from '../logger'
 
 const router = Router()
 
 router.post('/', (req: Request, res: Response) => {
-  if (!hasPropertiesOfType<sensorData>(req.body)) {
+  if (!hasPropertiesOfType<SensorData>(req.body, sensorData)) {
     return res.status(400).json({
-      message: 'Missing required property of type sensorData',
+      message: 'Missing required property of type SensorData',
     })
   }
   if (isNaN(Number(req.body.data))) {
@@ -27,12 +27,12 @@ router.post('/', (req: Request, res: Response) => {
 })
 
 router.get('/', (req: Request, res: Response) => {
-  const jsonFiles: sensorData[] = []
+  const jsonFiles: SensorData[] = []
   for (const file of fs
     .readdirSync(`${path.resolve(__dirname, '../../database/rawData')}`)
     .filter((f) => f !== '.gitkeep')) {
     const jsonData = readFromJson(`rawData/${file}`)
-    if (hasPropertiesOfType<sensorData>(jsonData)) {
+    if (hasPropertiesOfType<SensorData>(jsonData, sensorData)) {
       if (jsonData !== undefined) {
         jsonFiles.push(jsonData)
       }
@@ -50,7 +50,7 @@ router.get('/:trashcanName', (req: Request, res: Response) => {
       message: `No data for trashcan-${req.params.trashcanName}.json`,
     })
   }
-  if (hasPropertiesOfType<sensorData>(jsonData)) {
+  if (hasPropertiesOfType<SensorData>(jsonData, sensorData)) {
     return res.status(200).json(jsonData)
   } else {
     logger.warn(`Invalid json in file trashcan-${req.params.trashcanName}.json`)

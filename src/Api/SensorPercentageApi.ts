@@ -3,7 +3,13 @@ import Router from 'express-promise-router'
 import readFromJson from '../Shared/readFromJson'
 import fs from 'fs'
 import path from 'path'
-import { sensorData, sensorDataPercentage, sensorStatisticPercentage } from '../interface'
+import {
+  sensorData,
+  SensorData,
+  SensorDataPercentage,
+  sensorStatisticPercentage,
+  SensorStatisticPercentage,
+} from '../interface'
 import mapTrashcanPercentage from '../Shared/mapTrashcanPercentage'
 import hasPropertiesOfType from '../Shared/hasPropertiesOfType'
 import logger from '../logger'
@@ -11,12 +17,12 @@ import logger from '../logger'
 const router = Router()
 
 router.get('/', (req: Request, res: Response) => {
-  const jsonFiles: sensorDataPercentage[] = []
+  const jsonFiles: SensorDataPercentage[] = []
   for (const file of fs
     .readdirSync(`${path.resolve(__dirname, '../../database/rawData')}`)
     .filter((f) => f !== '.gitkeep')) {
     const jsonData = readFromJson(`rawData/${file}`)
-    if (hasPropertiesOfType<sensorData>(jsonData)) {
+    if (hasPropertiesOfType<SensorData>(jsonData, sensorData)) {
       jsonFiles.push({
         name: jsonData.name,
         percentage: mapTrashcanPercentage(jsonData.data),
@@ -35,7 +41,7 @@ router.get('/:trashcanName', (req: Request, res: Response) => {
       message: `No data for ${req.params.trashcanName}`,
     })
   }
-  if (hasPropertiesOfType<sensorData>(jsonData)) {
+  if (hasPropertiesOfType<SensorData>(jsonData, sensorData)) {
     return res.status(200).json({
       name: jsonData.name,
       percentage: mapTrashcanPercentage(jsonData.data),
@@ -54,10 +60,10 @@ router.get('/percentage/:trashcanName/statistics', (req: Request, res: Response)
     })
   }
 
-  const validJsonData: sensorStatisticPercentage[] = []
+  const validJsonData: SensorStatisticPercentage[] = []
   if (Array.isArray(jsonDataArray)) {
     for (const jsonData of jsonDataArray) {
-      if (hasPropertiesOfType<sensorStatisticPercentage>(jsonData)) {
+      if (hasPropertiesOfType<SensorStatisticPercentage>(jsonData, sensorStatisticPercentage)) {
         validJsonData.push(jsonData)
       }
     }
