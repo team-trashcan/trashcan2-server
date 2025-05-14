@@ -126,8 +126,8 @@ paths:
                   data:
                     type: number
                   estimatedTimeOfFull:
-                      type: string
-                      format: date-time
+                    type: string
+                    format: date-time
         '404':
           description: Not Found
 
@@ -200,18 +200,13 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        date:
-                          type: string
-                        percentageFill:
-                          type: number
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                    percentageFill:
+                      type: number
         '404':
           description: Not Found

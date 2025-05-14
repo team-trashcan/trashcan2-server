@@ -2,6 +2,18 @@
 
 The "backend" for the trashcans
 
+## Table of contents
+
+<!-- toc -->
+
+- [Development](#development)
+- [Deployment](#deployment)
+  - [Log level](#log-level)
+  - [Timestamps](#timestamps)
+- [API](#api)
+
+<!-- tocstop -->
+
 ## Development
 
 Run the server in local environment
@@ -24,10 +36,9 @@ npm run lint-fix
 
 ## Deployment
 
-A few of the config values can be changed (on startup) by setting environment variables.\
-To have them take effect set `ALLOW_CONFIG_MUTATIONS` to `'true'`.
+All config values can be changed (on startup) by setting environment variables.
 
-> Upper- or lowercase doesn't matter with any variable
+> Should work - might have to put a envvars.yaml or something into config/, wont test rn.
 
 ### Log level
 
@@ -41,11 +52,11 @@ Possible values are:
 
 ### Timestamps
 
-The variable `TIMESTAMP_ENABLED` defines if timestamps are enabled (duh).\
-Boolean, `true` or `false`. Timestamp format:
+The variable `TIMESTAMP_ENABLED` defines if timestamps are enabled (duh).
+Boolean, `true` or `false`. Timestamps are formatted as standard ISO strings.
 
-```plaintext
-[dd-MM-yyyy_HH:mm:ss]
+## API
 
-[06-03-2025_17:55:20]
-```
+The current production API documentation can be found [here](http://api.wurstkatze.eu/v1/docs).
+
+The local API documentation is available under [http://localhost:4000/v1/docs](http://localhost:4000/v1/docs).
