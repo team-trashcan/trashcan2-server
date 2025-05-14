@@ -3,16 +3,11 @@ import Router from 'express-promise-router'
 import readFromJson from '../Shared/readFromJson'
 import fs from 'fs'
 import path from 'path'
-import {
-  sensorData,
-  SensorData,
-  SensorDataPercentage,
-  sensorStatisticPercentage,
-  SensorStatisticPercentage,
-} from '../interface'
+import { sensorData, SensorData, SensorDataPercentage, SensorStatisticPercentage } from '../interface'
 import mapTrashcanPercentage from '../Shared/mapTrashcanPercentage'
 import hasPropertiesOfType from '../Shared/hasPropertiesOfType'
 import logger from '../logger'
+import { SensorStatisticFileStructure, sensorStatisticFileStructure } from '../interface'
 
 const router = Router()
 
@@ -54,22 +49,22 @@ router.get('/:trashcanName', (req: Request, res: Response) => {
   }
 })
 
-// TODO This can't be found, 404 - Idk why, the above works
-router.get('/percentage/:trashcanName/statistics', (req: Request, res: Response) => {
-  const jsonDataArray = readFromJson(`statistics/trashcan-${req.params.trashcanName}.json`)
-  if (jsonDataArray === undefined) {
+router.get('/:trashcanName/statistics', (req: Request, res: Response) => {
+  const trashcanStatistics = readFromJson(`statistics/trashcan-${req.params.trashcanName}.json`)
+
+  if (trashcanStatistics === undefined) {
     return res.status(404).json({
       message: `No statistics data for ${req.params.trashcanName}`,
     })
   }
 
+  if (!hasPropertiesOfType<SensorStatisticFileStructure>(trashcanStatistics, sensorStatisticFileStructure)) {
+    throw new Error(`Invalid file structure in statistics/trashcan-${req.params.trashcanName}.json`)
+  }
+
   const validJsonData: SensorStatisticPercentage[] = []
-  if (Array.isArray(jsonDataArray)) {
-    for (const jsonData of jsonDataArray) {
-      if (hasPropertiesOfType<SensorStatisticPercentage>(jsonData, sensorStatisticPercentage)) {
-        validJsonData.push(jsonData)
-      }
-    }
+  for (const jsonData of trashcanStatistics.data) {
+    validJsonData.push(jsonData)
   }
 
   return res.status(200).json(validJsonData)
