@@ -5,3 +5,6 @@ app:
   port: 4000
   filePath: ./database
   updateStatisticsOnNewData: true
+  percentage:
+    empty: 100
+    full: 20
