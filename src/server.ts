@@ -31,7 +31,7 @@ const cronjob = new CronJob('0 0 */6 * * *', updateTrashcanStatistics, null, tru
 const gracefulShutdown = (signal: string) => {
   logger.debug(`Received ${signal}. Closing server...`)
   if (cronjob.isActive) {
-    cronjob.stop()
+    void cronjob.stop()
     logger.debug('CronJob stopped')
   }
   if (serverInstance) {

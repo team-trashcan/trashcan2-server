@@ -26,9 +26,7 @@
     "cron": "^4.1.0",
     "express": "^4.0.0",
     "express-promise-router": "^4.1.1",
-    "js-yaml": "^4.1.0",
     "swagger-ui-express": "^5.0.1",
-    "tslib": "^2.8.1",
     "typescript": "^5.7.3",
     "yamljs": "^0.3.0"
   },
