@@ -6,7 +6,7 @@ info:
   description: API documentation for our intelligent trashcans
 
 servers:
-  - url: http://api.wurstkatze.eu/{version}
+  - url: https://api.wurstkatze.eu/{version}
     description: Production
     variables:
       version:

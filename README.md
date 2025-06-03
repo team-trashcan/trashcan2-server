@@ -57,6 +57,6 @@ Boolean, `true` or `false`. Timestamps are formatted as standard ISO strings.
 
 ## API
 
-The current production API documentation can be found [here](http://api.wurstkatze.eu/v1/docs).
+The current production API documentation can be found [here](https://api.wurstkatze.eu/v1/docs).
 
 The local API documentation is available under [http://localhost:4000/v1/docs](http://localhost:4000/v1/docs).
